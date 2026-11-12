@@ -61,7 +61,7 @@ ThemeData televisionTheme(ThemeData theme) {
   // 不做描边高亮——描边在客厅视距下几乎无效。
   final focusSide = WidgetStateProperty.resolveWith<BorderSide?>(
     (states) => states.contains(WidgetState.focused)
-        ? BorderSide(color: dark ? TvColor.focusRing : colors.primary, width: 3)
+        ? BorderSide(color: dark ? TvColor.focusRing : colors.primary, width: TvSpace.ringWidth)
         : BorderSide.none,
   );
   final focusBackground = WidgetStateProperty.resolveWith<Color?>(

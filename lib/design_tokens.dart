@@ -42,8 +42,11 @@ abstract final class TvColor {
   /// 发丝线（白 @ 9%）。
   static const hair = Color(0x17FFFFFF);
 
-  /// 焦点环：全站唯一焦点语言。
-  static const focusRing = Colors.white;
+  /// 焦点环：全站唯一焦点语言（亮绿，远距可辨）。
+  static const focusRing = Color(0xFF2EFF6A);
+
+  /// 焦点外发光（亮绿 @ 45%）。
+  static const focusGlow = Color(0x732EFF6A);
 
   /// 评分金。
   static const rating = Color(0xFFFFC861);
@@ -54,7 +57,7 @@ abstract final class TvColor {
 
 abstract final class TvSpace {
   /// 焦点环宽度。
-  static const ringWidth = 3.0;
+  static const ringWidth = 5.0;
 
   /// 卡片焦点放大倍数。
   static const focusScale = 1.065;
@@ -96,11 +99,11 @@ abstract final class TvText {
   static const nav = 9.0;
 }
 
-/// 焦点三重可辨所需的焦点装饰：白环 + 白晕 + 珊瑚外发光。
+/// 焦点三重可辨所需的焦点装饰：绿环 + 绿晕 + 绿外发光。
 List<BoxShadow> tvFocusShadows({bool brand = true}) => [
   if (brand)
     BoxShadow(
-      color: TvColor.brandGlow,
+      color: TvColor.focusGlow,
       blurRadius: 34,
       spreadRadius: 2,
     ),

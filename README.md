@@ -1,19 +1,19 @@
 <div align="center">
 
-# 真果TV
+# 猫果TV
 
 **Android TV 短剧应用 · 遥控器全流程 · 大屏重制界面**
 
-[![release](https://img.shields.io/badge/release-1.0.0-FF6B4A)](https://github.com/serra006/guoapp/releases/latest)
-[![platform](https://img.shields.io/badge/platform-Android%20TV%20%7C%20LEANBACK-1B1E27)](https://github.com/serra006/guoapp/releases/latest)
-[![abi](https://img.shields.io/badge/ABI-arm64--v8a%20%7C%20armeabi--v7a-1B1E27)](https://github.com/serra006/guoapp/releases/latest)
-[![build](https://img.shields.io/badge/build-GitHub%20Actions-2ea44f)](https://github.com/serra006/guoapp/actions)
+[![release](https://img.shields.io/badge/release-1.0.0-FF6B4A)]
+[![platform](https://img.shields.io/badge/platform-Android%20TV%20%7C%20LEANBACK-1B1E27)]
+[![abi](https://img.shields.io/badge/ABI-arm64--v8a%20%7C%20armeabi--v7a-1B1E27)]
+[![build](https://img.shields.io/badge/build-GitHub%20Actions-2ea44f)]
 
 </div>
 
-真果TV 是把短剧应用按 **10-foot UI**（3 米观看距离）重新设计了一遍的电视版：横屏锁定、电视桌面入口、焦点三重可辨、返回键分层防误退、搜索支持拼音输入法。站源的请求、解析、播放全部在设备本地完成，**没有任何自建服务器**。
+猫果TV 是把短剧应用按 **10-foot UI**（3 米观看距离）重新设计了一遍的电视版：横屏锁定、电视桌面入口、焦点三重可辨、返回键分层防误退、搜索支持拼音输入法。站源的请求、解析、播放全部在设备本地完成，**没有任何自建服务器**。
 
-> 基于开源项目 **guoapp**（原作者：鱼佬）改造的电视专用分支。非官方、非商业，仅供个人学习与技术研究。
+> 非官方、非商业，仅供个人学习与技术研究。
 
 ![首页](design/preview-home.png)
 
@@ -48,7 +48,7 @@
 
 ## 下载与选包
 
-到 **[Releases](https://github.com/serra006/guoapp/releases/latest)** 页下载：电视装带 `-tv-` 的，手机装不带 `-tv-` 的通用包。
+电视装带 `-tv-` 的，手机装不带 `-tv-` 的通用包。
 
 | 你的设备 | 选这个文件 |
 | --- | --- |
@@ -194,7 +194,7 @@ python3 scripts/build_android.py --flavor tv --cn-mirrors      # 国内镜像
 
 | Release 标签 | 对应 | 版本来源 |
 | --- | --- | --- |
-| `tv-v1.0.0` | 电视版「真果TV」 | `versions.json` 的 `tv` |
+| `tv-v1.0.0` | 电视版「猫果TV」 | `versions.json` 的 `tv` |
 | `app-v0.2.x` | 手机版「真果鉴」 | `pubspec.yaml` 的 `version` |
 
 两端共用 `pubspec.yaml` 的 `+N` 构建号（决定 versionCode，必须只增不减，否则覆盖安装会被系统拒绝），但版本名各走各的：电视端由构建脚本传 `--build-name` 覆盖，手机端直接用 pubspec。
@@ -256,6 +256,6 @@ keyPassword=你的密码
 
 ## 来源与免责声明
 
-源码来自网上开源的 **guoapp**（原作者：鱼佬），在 `0.2.64+71` 基础上做了电视端适配、站源补全与界面重制。
+
 
 本项目仅用于个人学习与技术研究，**不保证可用性，随时可能停止维护**。所有内容版权归原站所有，本项目不存储任何视频资源，也不解除源站的 VIP 或其他授权限制。请勿用于商业用途。

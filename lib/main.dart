@@ -312,31 +312,37 @@ class DuanjuApp extends StatelessWidget {
       final mode = store?.displayMode ?? 'auto';
       final tv = mode == 'television' || mode == 'auto' && television;
       final theme = Theme.of(context);
-      return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: AppTheme.systemBars(theme.brightness),
-        child: ColoredBox(
-          color: theme.scaffoldBackgroundColor,
-          child: AppOrientationScope(
-            television: tv,
-            child: AppLayout(
+      final fontScale = store?.fontScale ?? 1.6;
+      return MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(fontScale),
+        ),
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: AppTheme.systemBars(theme.brightness),
+          child: ColoredBox(
+            color: theme.scaffoldBackgroundColor,
+            child: AppOrientationScope(
               television: tv,
-              version: version,
-              child: Theme(
-                data: tv ? televisionTheme(theme) : theme,
-                child: Shortcuts(
-                  shortcuts: const {
-                    SingleActivator(
-                      LogicalKeyboardKey.select,
-                      includeRepeats: false,
-                    ): ActivateIntent(),
-                    SingleActivator(
-                      LogicalKeyboardKey.gameButtonA,
-                      includeRepeats: false,
-                    ): ActivateIntent(),
-                    // 注意：不要把 goBack 映射为 DismissIntent——
-                    // 它会拦截遥控器返回键，导致返回键不再走标准的路由返回逻辑。
-                  },
-                  child: FocusTraversalGroup(child: child!),
+              child: AppLayout(
+                television: tv,
+                version: version,
+                child: Theme(
+                  data: tv ? televisionTheme(theme) : theme,
+                  child: Shortcuts(
+                    shortcuts: const {
+                      SingleActivator(
+                        LogicalKeyboardKey.select,
+                        includeRepeats: false,
+                      ): ActivateIntent(),
+                      SingleActivator(
+                        LogicalKeyboardKey.gameButtonA,
+                        includeRepeats: false,
+                      ): ActivateIntent(),
+                      // 注意：不要把 goBack 映射为 DismissIntent——
+                      // 它会拦截遥控器返回键，导致返回键不再走标准的路由返回逻辑。
+                    },
+                    child: FocusTraversalGroup(child: child!),
+                  ),
                 ),
               ),
             ),

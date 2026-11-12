@@ -368,6 +368,12 @@ class LocalStore extends ChangeNotifier {
     return {'light', 'dark', 'system'}.contains(value) ? value! : 'system';
   }
 
+  double get fontScale {
+    final value = _configurationError == null ? _string('fontScale') : null;
+    final parsed = double.tryParse(value ?? '');
+    return parsed != null && {1.3, 1.6, 2.0}.contains(parsed) ? parsed : 1.6;
+  }
+
   bool get autoExport => !locked && (_bool('autoExport') ?? false);
   bool get exportPosters => !locked && (_bool('exportPosters') ?? false);
   String get source {
@@ -540,6 +546,10 @@ class LocalStore extends ChangeNotifier {
   Future<void> setThemeMode(String value) =>
       {'light', 'dark', 'system'}.contains(value)
       ? _setting('themeMode', value)
+      : Future.value();
+  Future<void> setFontScale(double value) =>
+      {1.3, 1.6, 2.0}.contains(value)
+      ? _setting('fontScale', value.toString())
       : Future.value();
   Future<void> setPlaybackPreferences(PlaybackPreferences value) {
     PlaybackPreferences.fromJson(value.toJson());

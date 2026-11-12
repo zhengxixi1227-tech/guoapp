@@ -91,13 +91,13 @@ func providerSourceForURL(raw string) string {
 	case host == "bfzyapi.com" || host == "www.bfzyapi.com":
 		return sourceBofeng
 	default:
-		return ""
+		return duanjuSourceForHost(host)
 	}
 }
 
 func (d *Downloader) providerURLCandidates(raw string) []string {
 	source := providerSourceForURL(raw)
-	if source == "" || source == sourceHuangju || source == sourceYeguo {
+	if source == "" || source == sourceHuangju || source == sourceYeguo || isDuanjuProviderSource(source) {
 		return []string{raw}
 	}
 	parsed, _ := url.Parse(raw)

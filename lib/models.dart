@@ -16,7 +16,19 @@ class SourceSite {
       id == 'guipian' ||
       id == 'hanxiaoquan' ||
       id == 'qimao' ||
-      id == 'bofeng';
+      id == 'bofeng' ||
+      id == 'yaguo' ||
+      id == 'maoguo' ||
+      id == 'fanguo' ||
+      id == 'guanguo' ||
+      id == 'heguo' ||
+      id == 'xingguo' ||
+      id == 'huaguo' ||
+      id == 'niuguo' ||
+      id == 'wangguo' ||
+      id == 'faguo' ||
+      id == 'piguo' ||
+      id == 'wuguo';
   /// 搜索联想：电视遥控器只能打拼音，中文剧名必须靠联想下拉转出来。
   /// 联想词库来自红果的联想接口（拼音检索，返回的是通用短剧词/剧名，
   /// 与当前站源无关），所以在线搜索的站源都该开——不开就等于没有输入入口。
@@ -70,10 +82,34 @@ class SourceSite {
     SourceSite('huangguoai', '黄果 AI', 'AI 短剧'),
     SourceSite('cloudfront', '黄果旧版', '旧 API 剧库'),
   ];
-  /// 可选站源只剩 6 个 primary，与 README 对外口径「内置 6 个站源」一致。
-  static const knownValues = [...primaryValues];
+  /// 重新启用的站源（黄豆已失效，不启用）。
+  static const reEnabledValues = [
+    SourceSite('huangju', '剧果', '热门 · 最新 · 分类短剧'),
+    SourceSite('yeguo', '野果', '分类短剧 · 在线搜索'),
+    dsd,
+    SourceSite('huangguo-video', '黄果视频', '视频剧集'),
+    SourceSite('huangguoai', '黄果 AI', 'AI 短剧'),
+    SourceSite('cloudfront', '黄果旧版', '旧 API 剧库'),
+  ];
+
+  /// 新果源（来自手机版全剧视界）。
+  static const fruitValues = [
+    SourceSite('yaguo', '芽果', '短剧 · 分类 · 搜索'),
+    SourceSite('maoguo', '猫果', '短剧 · 分类 · 搜索'),
+    SourceSite('fanguo', '饭果', '短剧 · 分类 · 搜索'),
+    SourceSite('guanguo', '观果', '短剧 · 分类 · 搜索'),
+    SourceSite('heguo', '河果', '短剧 · 分类 · 搜索'),
+    SourceSite('xingguo', '星果', '短剧 · 分类 · 搜索'),
+    SourceSite('huaguo', '花果', '短剧 · 分类 · 搜索'),
+    SourceSite('niuguo', '牛果', '短剧 · 分类 · 搜索'),
+    SourceSite('wangguo', '网果', '短剧 · 分类 · 搜索'),
+    SourceSite('faguo', '发果', '短剧 · 分类 · 搜索'),
+    SourceSite('piguo', '皮果', '短剧 · 分类 · 搜索'),
+    SourceSite('wuguo', '伍果', '短剧 · 分类 · 搜索'),
+  ];
+  static const knownValues = [...primaryValues, ...reEnabledValues, ...fruitValues];
   /// byId / isKnown 仍然认识历史 id，保证旧数据能正常显示、不被判非法。
-  static const allValues = [...primaryValues, ...legacyValues];
+  static const allValues = [...primaryValues, ...legacyValues, ...fruitValues];
   static const values = allSourcesEnabled ? knownValues : [hongguo];
   static bool isAvailable(String id) => values.any((site) => site.id == id);
   static bool isKnown(String id) => allValues.any((site) => site.id == id);

@@ -102,7 +102,7 @@ func isHuangguoProviderSource(source string) bool {
 	case sourceHuangguoAI, sourceHuangguoVideo, sourceHuangdou, sourceHongguo, sourceHuangju, sourceYeguo, sourceDSD, sourceCloudFront, sourceSorani, sourceGuipian, sourceHanxiaoquan, sourceQimao, sourceBofeng:
 		return true
 	default:
-		return false
+		return isDuanjuProviderSource(source)
 	}
 }
 
@@ -261,6 +261,10 @@ func (d *Downloader) GetHuangguoChapters(ctx context.Context, source, sourceID s
 	case sourceCloudFront:
 		return d.fetchLegacyChapters(ctx, sourceID)
 	default:
+		if isDuanjuProviderSource(source) {
+			drama, chapters, err := d.fetchDuanjuDetail(ctx, source, sourceID)
+			return drama.DisplayTitle(), chapters, err
+		}
 		return "", nil, fmt.Errorf("unsupported provider source: %s", source)
 	}
 }

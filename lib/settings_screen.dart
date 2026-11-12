@@ -76,6 +76,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  static String fontScaleLabel(double scale) => switch (scale) {
+        1.3 => '大字模式',
+        2.0 => '大',
+        _ => '标准',
+      };
+
+  Future<void> _chooseFontScale() async {
+    final selected = await showDialog<double>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text('字号'),
+        children: [
+          RadioGroup<double>(
+            groupValue: widget.store.fontScale,
+            onChanged: (value) => Navigator.pop(context, value),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (final scale in [1.3, 1.6, 2.0])
+                  RadioListTile<double>(
+                    value: scale,
+                    title: Text(fontScaleLabel(scale)),
+                    subtitle: scale == 1.6
+                        ? const Text('默认')
+                        : null,
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    if (selected != null && mounted) {
+      await saveUserChange(context, () => widget.store.setFontScale(selected));
+    }
+  }
+
   Widget _keepScreenOnTile(BuildContext context) {
     final keepScreenOn = widget.store.playbackPreferences.keepScreenOn;
     void toggle() {
@@ -200,6 +237,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   subtitle: Text(AppTheme.label(widget.store.themeMode)),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: _chooseTheme,
+                ),
+                TvTile(
+                  key: const ValueKey('font-scale-setting'),
+                  leading: const Icon(Icons.format_size_outlined),
+                  title: const Text('字号'),
+                  subtitle: Text(fontScaleLabel(widget.store.fontScale)),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: _chooseFontScale,
                 ),
                 if (!AppDevice.isTv && Platform.isAndroid)
                   _keepScreenOnTile(context),

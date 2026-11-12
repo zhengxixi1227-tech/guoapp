@@ -44,7 +44,7 @@ android {
             dimension = "platform"
             applicationId = "com.duanju.zhenguo.tv"
             versionNameSuffix = "-tv"
-            manifestPlaceholders["appLabel"] = "真果TV"
+            manifestPlaceholders["appLabel"] = "猫果TV"
             manifestPlaceholders["appBanner"] = "@drawable/tv_banner_all_sources"
         }
     }

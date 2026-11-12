@@ -17,7 +17,7 @@ class RemoteTarget extends StatefulWidget {
     this.label,
     this.radius = 14,
     this.padding = const EdgeInsets.all(4),
-    this.borderWidth = 3,
+    this.borderWidth = TvSpace.ringWidth,
     this.outlined = false,
     this.invertOnFocus = false,
     this.focusScale,
@@ -42,7 +42,7 @@ class RemoteTarget extends StatefulWidget {
   /// 获焦放大倍数，null 时取设计契约默认值。
   final double? focusScale;
 
-  /// 是否带珊瑚外发光。纯文字行内元素可关掉，避免大面积泛红。
+  /// 是否带绿外发光。纯文字行内元素可关掉，避免大面积泛绿。
   final bool glow;
 
   @override

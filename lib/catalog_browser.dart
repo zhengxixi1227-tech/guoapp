@@ -91,7 +91,7 @@ class CatalogBrowser {
       }
     }
 
-    await Future.wait(List.generate(min(2, entries.length), (_) => worker()));
+    await Future.wait(List.generate(min(6, entries.length), (_) => worker()));
   }
 
   Future<String?> loadCategories(

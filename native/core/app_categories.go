@@ -76,6 +76,9 @@ func validNativeCategory(source, category string) bool {
 		// 这里只做格式校验，避免把任意字符串塞进缓存键和 t= 参数。
 		return validBofengCategory(category)
 	}
+	if isDuanjuProviderSource(source) {
+		return validDuanjuCategory(source, category)
+	}
 	return false
 }
 
@@ -150,6 +153,12 @@ func (engine *nativeEngine) nativeCategories(ctx context.Context, source string,
 	case sourceBofeng:
 		var categories []nativeCategory
 		categories, err = d.fetchBofengCategories(ctx)
+		if err == nil {
+			all = append(all, categories...)
+		}
+	case sourceYaguo, sourceMaoguo, sourceFanguo, sourceGuanguo, sourceHeguo, sourceXingguo, sourceHuaguo, sourceNiuguo, sourceWangguo, sourceFaguo, sourcePiguo, sourceWuguo:
+		var categories []nativeCategory
+		categories, err = d.fetchDuanjuCategories(ctx, source)
 		if err == nil {
 			all = append(all, categories...)
 		}
