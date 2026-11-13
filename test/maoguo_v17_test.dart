@@ -77,11 +77,14 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: DramaTile(
-            key: const ValueKey('hongguo:100'),
-            drama: FixtureRepository.free,
-            repository: FixtureRepository(),
-            onTap: () => tapped++,
+          body: SizedBox(
+            width: 180,
+            child: DramaTile(
+              key: const ValueKey('hongguo:100'),
+              drama: FixtureRepository.free,
+              repository: FixtureRepository(),
+              onTap: () => tapped++,
+            ),
           ),
         ),
       ),

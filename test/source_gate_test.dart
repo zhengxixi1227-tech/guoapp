@@ -49,7 +49,7 @@ void main() {
     expect(store.sourcesUnlocked, isFalse);
     expect(
       store.sources.length,
-      SourceSite.primaryValues.length,
+      allSourcesEnabled ? SourceSite.primaryValues.length : 1,
     );
     expect(store.allowsSource('huangdou'), isFalse);
     expect(store.allowsSource('hongguo'), isTrue);
@@ -72,7 +72,7 @@ void main() {
     expect(restarted.sourcesUnlocked, isFalse);
     expect(
       restarted.sources.length,
-      SourceSite.primaryValues.length,
+      allSourcesEnabled ? SourceSite.primaryValues.length : 1,
     );
     await restarted.unlockSources('666');
     expect(restarted.sourcesUnlocked, isTrue);
@@ -129,7 +129,7 @@ void main() {
     expect(store.sourcesUnlocked, isFalse);
     expect(
       store.sources.length,
-      SourceSite.primaryValues.length,
+      allSourcesEnabled ? SourceSite.primaryValues.length : 1,
     );
   });
 
