@@ -1,5 +1,6 @@
 import 'package:duanju_app/app_build.dart';
 import 'package:duanju_app/local_store.dart';
+import 'package:duanju_app/models.dart';
 import 'package:duanju_app/source_gate_dialog.dart';
 import 'package:duanju_app/source_gate_taps.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,12 @@ void main() {
     expect(
       store.sources.map((site) => site.id),
       allSourcesEnabled
-          ? ['qimao', 'hongguo', 'hanxiaoquan', 'guipian', 'sorani']
+          ? SourceSite.primaryValues.map((site) => site.id)
           : ['hongguo'],
     );
     expect(store.allowsSource('huangdou'), isFalse);
     expect(store.allowsSource('hongguo'), isTrue);
-    // 未启用密码锁时无处输入密码，需要先在弹窗里启用。
+    // 未启用密码锁时直接解锁会报错，需要先启用。
     await expectLater(store.unlockSources('666'), throwsStateError);
     expect(store.sourcesUnlocked, isFalse);
   });
@@ -42,11 +43,14 @@ void main() {
     await store.enableSourceGate('666');
     expect(store.sourceGateEnabled, isTrue);
     expect(store.sourcesUnlocked, isTrue);
-    expect(store.sources.length, allSourcesEnabled ? 12 : 1);
+    expect(store.sources.length, SourceSite.values.length);
 
     store.lockSources();
     expect(store.sourcesUnlocked, isFalse);
-    expect(store.sources.length, allSourcesEnabled ? 5 : 1);
+    expect(
+      store.sources.length,
+      SourceSite.primaryValues.length,
+    );
     expect(store.allowsSource('huangdou'), isFalse);
     expect(store.allowsSource('hongguo'), isTrue);
     if (allSourcesEnabled) expect(store.allowsSource('sorani'), isTrue);
@@ -55,7 +59,7 @@ void main() {
     expect(store.sourcesUnlocked, isFalse);
     await store.unlockSources('666');
     expect(store.sourcesUnlocked, isTrue);
-    expect(store.sources.length, allSourcesEnabled ? 12 : 1);
+    expect(store.sources.length, SourceSite.values.length);
   });
 
   test('a saved gate hides sources again after restart', () async {
@@ -66,7 +70,10 @@ void main() {
     addTearDown(restarted.dispose);
     expect(restarted.sourceGateEnabled, isTrue);
     expect(restarted.sourcesUnlocked, isFalse);
-    expect(restarted.sources.length, allSourcesEnabled ? 5 : 1);
+    expect(
+      restarted.sources.length,
+      SourceSite.primaryValues.length,
+    );
     await restarted.unlockSources('666');
     expect(restarted.sourcesUnlocked, isTrue);
   });
@@ -78,7 +85,7 @@ void main() {
     await store.disableSourceGate();
     expect(store.sourceGateEnabled, isFalse);
     expect(store.sourcesUnlocked, isTrue);
-    expect(store.sources.length, allSourcesEnabled ? 12 : 1);
+    expect(store.sources.length, SourceSite.values.length);
   });
 
   test('an invalid pin must be 3 to 12 digits', () async {
@@ -120,7 +127,10 @@ void main() {
     expect(store.configurationError, isNull);
     expect(store.sourceGateEnabled, isFalse);
     expect(store.sourcesUnlocked, isFalse);
-    expect(store.sources.length, allSourcesEnabled ? 5 : 1);
+    expect(
+      store.sources.length,
+      SourceSite.primaryValues.length,
+    );
   });
 
   test('a user-disabled gate keeps every compiled source visible', () async {
@@ -130,7 +140,7 @@ void main() {
     });
     expect(store.sourceGateEnabled, isFalse);
     expect(store.sourcesUnlocked, isTrue);
-    expect(store.sources.length, allSourcesEnabled ? 12 : 1);
+    expect(store.sources.length, SourceSite.values.length);
   });
 
   // 密码锁弹窗含动画与异步回调，用固定步进代替 pumpAndSettle，

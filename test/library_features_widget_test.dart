@@ -192,7 +192,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('相关推荐'), findsOneWidget);
+    expect(find.text('合季'), findsOneWidget);
     expect(find.byKey(ValueKey('series-${seasonOne.id}')), findsOneWidget);
     expect(find.byKey(ValueKey('series-${seasonTwo.id}')), findsOneWidget);
     final seasonTwoChip = find.byKey(ValueKey('series-${seasonTwo.id}'));
@@ -243,7 +243,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('相关推荐'), findsOneWidget);
+    expect(find.text('合季'), findsOneWidget);
     expect(find.byKey(ValueKey('series-${seasonTwo.id}')), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());

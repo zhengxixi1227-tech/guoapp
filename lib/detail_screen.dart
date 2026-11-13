@@ -789,7 +789,18 @@ class _DetailScreenState extends State<DetailScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('相关推荐', style: Theme.of(context).textTheme.titleMedium),
+          Row(
+            children: [
+              Text('合季', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(width: 10),
+              Text(
+                '点一下切换，不用重新搜',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,

@@ -322,6 +322,71 @@ class _CachedCoverImageState extends State<CachedCoverImage> {
   );
 }
 
+class _TapFocusRing extends StatefulWidget {
+  const _TapFocusRing({
+    required this.child,
+    required this.onTap,
+    this.onLongPress,
+    this.onSecondaryTap,
+  });
+  final Widget child;
+  final VoidCallback onTap;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onSecondaryTap;
+  @override
+  State<_TapFocusRing> createState() => _TapFocusRingState();
+}
+
+class _TapFocusRingState extends State<_TapFocusRing> {
+  final _node = FocusNode();
+  bool _focused = false;
+
+  @override
+  void dispose() {
+    _node.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FocusableActionDetector(
+      focusNode: _node,
+      onFocusChange: (value) {
+        if (mounted) setState(() => _focused = value);
+      },
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () {
+              _node.requestFocus();
+              widget.onTap();
+            },
+            onLongPress: widget.onLongPress,
+            onSecondaryTap: widget.onSecondaryTap,
+            borderRadius: BorderRadius.circular(TvSpace.cardRadius),
+            child: widget.child,
+          ),
+          Positioned.fill(
+            child: IgnorePointer(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 140),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(TvSpace.cardRadius),
+                  border: Border.all(
+                    color: _focused ? TvColor.focusRing : Colors.transparent,
+                    width: 3,
+                  ),
+                  boxShadow: _focused ? tvFocusShadows() : null,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class DramaTile extends StatelessWidget {
   const DramaTile({
     super.key,
@@ -507,11 +572,10 @@ class DramaTile extends StatelessWidget {
       button: true,
       selected: selected,
       label: '${drama.title}，${drama.episodes}集',
-      child: InkWell(
+      child: _TapFocusRing(
         onTap: onTap,
         onLongPress: onLongPress ?? onMore,
         onSecondaryTap: onMore,
-        borderRadius: BorderRadius.circular(TvSpace.cardRadius),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [poster, textBlock],

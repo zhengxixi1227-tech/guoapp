@@ -13,6 +13,7 @@ import 'local_store.dart';
 import 'profiles_screen.dart';
 import 'app_build.dart';
 import 'sources_screen.dart';
+import 'source_gate_dialog.dart';
 import 'widgets.dart';
 import 'resource_settings_screen.dart';
 import 'lan_screen.dart';
@@ -81,6 +82,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         2.0 => '大',
         _ => '标准',
       };
+
+  String _sourceGateSubtitle() {
+    final store = widget.store;
+    if (store.sourceGateEnabled) {
+      return store.sourcesUnlocked ? '已解锁，显示全部站源' : '已启用，隐藏的源需密码查看';
+    }
+    return store.sourceGateOff ? '未启用，显示全部站源' : '未启用，隐藏的源默认隐藏';
+  }
 
   Future<void> _chooseFontScale() async {
     final selected = await showDialog<double>(
@@ -245,6 +254,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   subtitle: Text(fontScaleLabel(widget.store.fontScale)),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: _chooseFontScale,
+                ),
+                TvTile(
+                  key: const ValueKey('source-gate-setting'),
+                  leading: const Icon(Icons.lock_outline_rounded),
+                  title: const Text('站源密码锁'),
+                  subtitle: Text(_sourceGateSubtitle()),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => showSourceGateDialog(context, widget.store),
                 ),
                 if (!AppDevice.isTv && Platform.isAndroid)
                   _keepScreenOnTile(context),
